@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     public GameObject heartPrefab;  // Prefab del corazón
     public Transform heartsContainer;  // Contenedor para los corazones
     public GameObject gameOverPanel;  // Panel de Game Over
+    public PlayerAttack playerAttack;
 
     private void Start()
     {
@@ -32,6 +33,13 @@ public class PlayerHealth : MonoBehaviour
         // Mostrar el panel de Game Over
         gameOverPanel.SetActive(true);
         Debug.Log("Jugador ha muerto");
+        Cursor.lockState = CursorLockMode.None;  // Desbloquear el cursor
+        Cursor.visible = true;  // Hacer el cursor visible
+        // deshabilitar la capacidad de disparar en el Player
+        playerAttack.canShoot = false;
+
+
+
         // Aquí puedes añadir lógica adicional como reiniciar el nivel o salir al menú principal
     }
 
@@ -46,7 +54,14 @@ public class PlayerHealth : MonoBehaviour
         // Instanciar un nuevo corazón por cada vida actual
         for (int i = 0; i < currentHealth; i++)
         {
-            Instantiate(heartPrefab, heartsContainer);
+            GameObject newHeart = Instantiate(heartPrefab, heartsContainer);
+            Animator heartAnimator = newHeart.GetComponent<Animator>();
+
+            if (heartAnimator != null)
+            {
+                // Reproducir la animación predeterminada del corazón
+                heartAnimator.Play("HeartAnimation", 0, 0f);  // Reemplaza "HeartAnimation" con el nombre de tu animación
+            }
         }
     }
 }

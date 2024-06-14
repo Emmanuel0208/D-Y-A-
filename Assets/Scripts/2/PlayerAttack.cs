@@ -29,14 +29,14 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
+        // Controlar el temporizador de cooldown
         if (isCooldownActive)
         {
-            cooldownTimer += Time.deltaTime;  // Aumentar el temporizador
+            cooldownTimer += Time.deltaTime;  // Incrementar el temporizador
 
-            // Actualizar la cantidad de llenado de la imagen
             if (cooldownImage != null)
             {
-                cooldownImage.fillAmount = cooldownTimer / cooldownTime;
+                cooldownImage.fillAmount = cooldownTimer / cooldownTime;  // Actualizar el llenado de la imagen
             }
 
             if (cooldownTimer >= cooldownTime)
@@ -51,7 +51,8 @@ public class PlayerAttack : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Fire1") && canShoot && !isCooldownActive && currentAmmo > 0)  // Asume que el botón de disparo está configurado como "Fire1" en Input
+        // Disparar si se cumple la condición
+        if (Input.GetButtonDown("Fire1") && canShoot && !isCooldownActive && currentAmmo > 0)
         {
             Shoot();
         }
@@ -59,7 +60,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(projectilePrefab, launchPoint.position, launchPoint.rotation);
+        Instantiate(projectilePrefab, launchPoint.position, launchPoint.rotation);  // Crear el proyectil
         currentAmmo--;  // Reducir la cantidad de balas
         UpdateAmmoUI();  // Actualizar la UI de balas
         isCooldownActive = true;  // Iniciar el cooldown
@@ -72,7 +73,7 @@ public class PlayerAttack : MonoBehaviour
     // Función para actualizar la UI de balas
     private void UpdateAmmoUI()
     {
-        // Eliminar las balas existentes
+        // Eliminar las balas existentes en la UI
         foreach (Transform child in ammoContainer)
         {
             Destroy(child.gameObject);
@@ -82,51 +83,20 @@ public class PlayerAttack : MonoBehaviour
         for (int i = 0; i < currentAmmo; i++)
         {
             GameObject newAmmo = Instantiate(ammoPrefab, ammoContainer);
-            Animator ammoAnimator = newAmmo.GetComponent<Animator>();
 
+            // Asumimos que la animación está correctamente configurada en el prefab
+            Animator ammoAnimator = newAmmo.GetComponent<Animator>();
             if (ammoAnimator != null)
             {
-                // Verificar que el Animator Controller esté asignado y que la animación exista
-                RuntimeAnimatorController animatorController = ammoAnimator.runtimeAnimatorController;
-                if (animatorController != null)
-                {
-                    bool hasAmmoAnimation = false;
-
-                    // Verificar si la animación está en el Animator Controller
-                    foreach (AnimationClip clip in animatorController.animationClips)
-                    {
-                        if (clip.name == "AmmoAnimation")  // Reemplaza "AmmoAnimation" con el nombre de tu animación
-                        {
-                            hasAmmoAnimation = true;
-                            break;
-                        }
-                    }
-
-                    if (hasAmmoAnimation)
-                    {
-                        ammoAnimator.Play("AmmoAnimation");  // Reemplaza "AmmoAnimation" con el nombre de tu animación
-                    }
-                    else
-                    {
-                        Debug.LogWarning("No se encontró la animación 'AmmoAnimation' en el Animator Controller.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("El Animator Controller no está asignado en el prefab de la bala.");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No se encontró el componente Animator en el prefab de la bala.");
+                ammoAnimator.Play("AmmoAnimation", 0, 0f);  // Reproducir la animación predeterminada
             }
         }
     }
 
-    // Función para recargar balas (puede ser llamada por un objeto de recarga o una acción)
+    // Función para recargar balas
     public void Reload()
     {
-        currentAmmo = maxAmmo;
-        UpdateAmmoUI();
+        currentAmmo = maxAmmo;  // Restablecer la cantidad de balas al máximo
+        UpdateAmmoUI();  // Actualizar la UI de balas
     }
 }
