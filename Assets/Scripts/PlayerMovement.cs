@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Velocidad de movimiento del Player
     public float mouseSensitivity = 100f;  // Sensibilidad del movimiento del ratón
-    public Transform playerBody;  // Referencia al cuerpo del Player (objeto con el script)
+    public Transform playerBody;  // Referencia al cuerpo del Player
     public Transform cameraTransform; // Referencia a la cámara del Player
 
     private CharacterController controller; // Referencia al CharacterController
@@ -15,8 +15,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // Bloquear el cursor en el centro de la pantalla y ocultarlo
-        Cursor.lockState = CursorLockMode.Locked;
+        // No desactivar ni bloquear el cursor aquí, mantenerlo libre y visible
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         // Obtener el CharacterController del GameObject
         controller = GetComponent<CharacterController>();
@@ -47,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Rotar la cámara en el eje vertical
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotación vertical para evitar que la cámara gire completamente
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotación vertical
 
             // Aplicar la rotación de la cámara
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -85,5 +86,4 @@ public class PlayerMovement : MonoBehaviour
         isLookingBack = false;
         cameraTransform.localRotation = originalCameraRotation;
     }
-
 }

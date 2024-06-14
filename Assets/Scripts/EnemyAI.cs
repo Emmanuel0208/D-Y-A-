@@ -3,22 +3,34 @@ using System.Collections.Generic;
 
 public class EnemyAI : MonoBehaviour
 {
-    public GameObject player;                 // Referencia al objeto Player
-    public GraphManager graphManager;         // Referencia al GraphManager
-    public float speed = 3.0f;                // Velocidad constante del Enemy
+    private GameObject player;  // Referencia al objeto Player
+    private GraphManager graphManager;  // Referencia al GraphManager
+    public float speed = 3.0f;  // Velocidad constante del Enemy
     public float recalculateInterval = 1.0f;  // Intervalo en segundos para recalcular la ruta
-    private List<Node> path;                  // Lista que contiene la ruta calculada
-    private int currentPathIndex = 0;         // Índice del nodo actual en la ruta
-    private Node playerTempNode;              // Nodo temporal que representa la posición del Player
-    private Node playerClosestNode;           // Nodo más cercano al Player
-    private float timeSinceLastRecalculation; // Tiempo transcurrido desde la última recalculación
-    private Node lastTargetNode;              // Último nodo objetivo para evitar recalculaciones innecesarias
+
+    private List<Node> path;  // Lista que contiene la ruta calculada
+    private int currentPathIndex = 0;  // Índice del nodo actual en la ruta
+    private Node playerTempNode;  // Nodo temporal que representa la posición del Player
+    private Node playerClosestNode;  // Nodo más cercano al Player
+    private float timeSinceLastRecalculation;  // Tiempo transcurrido desde la última recalculación
+    private Node lastTargetNode;  // Último nodo objetivo para evitar recalculaciones innecesarias
 
     void Start()
     {
-        if (player == null || graphManager == null)
+        player = GameObject.FindGameObjectWithTag("Player");  // Buscar el Player por etiqueta
+        GameObject graphManagerObject = GameObject.FindGameObjectWithTag("GraphManager");  // Buscar el GraphManager por etiqueta
+
+        if (player == null || graphManagerObject == null)
         {
-            Debug.LogWarning("Player or GraphManager not set.");
+            Debug.LogWarning("Player o GraphManager no encontrado.");
+            return;
+        }
+
+        graphManager = graphManagerObject.GetComponent<GraphManager>();
+
+        if (graphManager == null)
+        {
+            Debug.LogWarning("GraphManager no tiene el componente GraphManager.");
             return;
         }
 
@@ -48,17 +60,14 @@ public class EnemyAI : MonoBehaviour
 
         Node enemyNode = graphManager.FindClosestNode(transform.position);
 
-        // Añadir el nodo temporal a la lista de nodos del grafo para el cálculo de la ruta
         List<Node> allNodes = new List<Node>(graphManager.nodes);
         if (!allNodes.Contains(playerTempNode))
         {
             allNodes.Add(playerTempNode);
         }
 
-        // Calcular la ruta más corta
         List<Node> newPath = graphManager.FindShortestPath(enemyNode, playerTempNode);
 
-        // Verificar si la ruta calculada es diferente de la anterior para evitar atascos
         if (newPath.Count > 1 && (lastTargetNode == null || newPath[1] != lastTargetNode))
         {
             path = newPath;
@@ -78,7 +87,6 @@ public class EnemyAI : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-        // Hacer que el Enemy mire hacia el Player
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
