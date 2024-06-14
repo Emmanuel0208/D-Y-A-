@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Detectar si se presiona la tecla 'P' para pausar o reanudar el juego
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             TogglePause();
         }
