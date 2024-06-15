@@ -35,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Jugador ha muerto");
         Cursor.lockState = CursorLockMode.None;  // Desbloquear el cursor
         Cursor.visible = true;  // Hacer el cursor visible
+        Time.timeScale = 0f;  // Pausar el tiempo del juego
         // deshabilitar la capacidad de disparar en el Player
         playerAttack.canShoot = false;
 

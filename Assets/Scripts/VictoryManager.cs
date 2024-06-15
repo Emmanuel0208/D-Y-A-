@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class VictoryManager : MonoBehaviour
 {
@@ -29,8 +28,11 @@ public class VictoryManager : MonoBehaviour
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform spawnPoint = spawnPoints[randomIndex];
 
-            // Instanciar el objeto de victoria en el punto de spawn
-            currentVictoryObject = Instantiate(victoryObjectPrefab, spawnPoint.position, spawnPoint.rotation);
+            // Establecer la rotación inicial (90 grados en el eje X)
+            Quaternion initialRotation = Quaternion.Euler(90f, 0f, 0f);
+
+            // Instanciar el objeto de victoria con la rotación inicial
+            currentVictoryObject = Instantiate(victoryObjectPrefab, spawnPoint.position, initialRotation);
         }
     }
 
@@ -48,12 +50,9 @@ public class VictoryManager : MonoBehaviour
             victoryPanel.SetActive(true);
             Cursor.lockState = CursorLockMode.None;  // Desbloquear el cursor
             Cursor.visible = true;  // Hacer el cursor visible
-                                    // deshabilitar la capacidad de disparar en el Player
+            Time.timeScale = 0f;  // Pausar el tiempo del juego      
+            // deshabilitar la capacidad de disparar en el Player
             playerAttack.canShoot = false;
-            Time.timeScale = 0f;
         }
-        
-
-
     }
 }
