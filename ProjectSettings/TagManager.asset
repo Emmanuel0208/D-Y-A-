@@ -11,6 +11,7 @@ TagManager:
   - Dijkstra
   - Projectile
   - RaycastEnemy
+  - LifeProp
   layers:
   - Default
   - TransparentFX
