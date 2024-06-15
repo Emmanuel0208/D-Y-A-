@@ -1,25 +1,25 @@
 using UnityEngine;
-using System.Collections;  // Asegúrate de que este espacio de nombres esté presente
+using System.Collections;  // Asegúrate de que este espacio de nombres esté incluido
 
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;  // Velocidad de movimiento del Player
     public float mouseSensitivity = 100f;  // Sensibilidad del movimiento del ratón
     public Transform playerBody;  // Referencia al cuerpo del Player
-    public Transform cameraTransform; // Referencia a la cámara del Player
+    public Transform cameraTransform;  // Referencia a la cámara del Player
+    public float speedBoostMultiplier = 1.5f;  // Multiplicador de velocidad para el boost
 
-    private CharacterController controller; // Referencia al CharacterController
+    private CharacterController controller;  // Referencia al CharacterController
+    private float originalMoveSpeed;  // Para almacenar la velocidad original
     private float xRotation = 0f;
-    private bool isLookingBack = false; // Indica si el jugador está mirando hacia atrás
-    private float originalMoveSpeed; // Para almacenar la velocidad original del jugador
+    private bool isLookingBack = false;  // Indica si el jugador está mirando hacia atrás
 
-    private Quaternion originalCameraRotation; // Para almacenar la rotación original de la cámara
+    private Quaternion originalCameraRotation;  // Para almacenar la rotación original de la cámara
 
     void Start()
     {
-        // No desactivar ni bloquear el cursor aquí, mantenerlo libre y visible
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Almacenar la velocidad original
+        originalMoveSpeed = moveSpeed;
 
         // Obtener el CharacterController del GameObject
         controller = GetComponent<CharacterController>();
@@ -38,9 +38,6 @@ public class PlayerMovement : MonoBehaviour
 
         // Guardar la rotación original de la cámara
         originalCameraRotation = cameraTransform.localRotation;
-
-        // Guardar la velocidad original del jugador
-        originalMoveSpeed = moveSpeed;
     }
 
     void Update()
@@ -53,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Rotar la cámara en el eje vertical
             xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limitar la rotación vertical
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);  // Limitar la rotación vertical
 
             // Aplicar la rotación de la cámara
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -80,6 +77,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public IEnumerator IncreaseSpeed(float multiplier, float duration)
+    {
+        moveSpeed *= multiplier;  // Aumentar la velocidad
+        yield return new WaitForSeconds(duration);  // Esperar la duración del boost
+        moveSpeed = originalMoveSpeed;  // Restablecer la velocidad original
+    }
+
     private void LookBack()
     {
         isLookingBack = true;
@@ -90,12 +94,5 @@ public class PlayerMovement : MonoBehaviour
     {
         isLookingBack = false;
         cameraTransform.localRotation = originalCameraRotation;
-    }
-
-    public IEnumerator IncreaseSpeed(float multiplier, float duration)
-    {
-        moveSpeed *= multiplier;  // Aumentar la velocidad
-        yield return new WaitForSeconds(duration);  // Esperar el tiempo de duración
-        moveSpeed = originalMoveSpeed;  // Restablecer la velocidad original
     }
 }

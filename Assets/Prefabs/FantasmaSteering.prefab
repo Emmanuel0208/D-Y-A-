@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ddecfeb41b85441921a12b39e89f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 20
-  moveSpeed: 5
+  detectionRange: 30
+  moveSpeed: 7
   chaseDuration: 10
   playerTag: Player
   projectileTag: Projectile

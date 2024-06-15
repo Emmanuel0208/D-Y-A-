@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform launchPoint;  // Punto de lanzamiento del proyectil
     public float cooldownTime = 2f;  // Tiempo de cooldown en segundos
     public Image cooldownImage;  // Referencia a la imagen de cooldown
+    public Image crosshair;  // Referencia a la imagen de cooldown
     public GameObject ammoPrefab;  // Prefab de la bala para la UI
     public Transform ammoContainer;  // Contenedor para las balas en la UI
     public int maxAmmo = 10;  // Número máximo de balas
@@ -50,11 +51,21 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
-
+        
         // Disparar si se cumple la condición
         if (Input.GetButtonDown("Fire1") && canShoot && !isCooldownActive && currentAmmo > 0)
         {
             Shoot();
+            crosshair.gameObject.SetActive(false);
+        }
+        if (!isCooldownActive) 
+        {
+            
+            crosshair.gameObject.SetActive(true);
+        }
+        else
+        {
+            crosshair.gameObject.SetActive(false);
         }
     }
 
@@ -69,6 +80,8 @@ public class PlayerAttack : MonoBehaviour
             cooldownImage.gameObject.SetActive(true);  // Mostrar la imagen cuando se inicie el cooldown
         }
     }
+
+    
 
     // Función para añadir munición
     public void AddAmmo(int amount)
