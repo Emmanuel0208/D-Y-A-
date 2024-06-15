@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour
     public GameObject heartPrefab;  // Prefab del corazón
     public Transform heartsContainer;  // Contenedor para los corazones
     public GameObject gameOverPanel;  // Panel de Game Over
-    public PlayerAttack playerAttack;
+    public PlayerAttack playerAttack;  // Referencia al script de ataque del jugador
+    public PlayerMovement playerMovement;  // Referencia al script de movimiento del jugador
 
     private void Start()
     {
@@ -28,6 +29,20 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void AddHealth(int amount)
+    {
+        if (currentHealth < maxHealth)
+        {
+            currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+            UpdateHeartsUI();
+        }
+        else
+        {
+            // Si la vida está al máximo, otorga un beneficio aleatorio
+            GiveRandomBenefit();
+        }
+    }
+
     private void Die()
     {
         // Mostrar el panel de Game Over
@@ -36,12 +51,7 @@ public class PlayerHealth : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;  // Desbloquear el cursor
         Cursor.visible = true;  // Hacer el cursor visible
         Time.timeScale = 0f;  // Pausar el tiempo del juego
-        // deshabilitar la capacidad de disparar en el Player
-        playerAttack.canShoot = false;
-
-
-
-        // Aquí puedes añadir lógica adicional como reiniciar el nivel o salir al menú principal
+        playerAttack.canShoot = false;  // Deshabilitar la capacidad de disparar
     }
 
     private void UpdateHeartsUI()
@@ -63,6 +73,24 @@ public class PlayerHealth : MonoBehaviour
                 // Reproducir la animación predeterminada del corazón
                 heartAnimator.Play("HeartAnimation", 0, 0f);  // Reemplaza "HeartAnimation" con el nombre de tu animación
             }
+        }
+    }
+
+    private void GiveRandomBenefit()
+    {
+        int randomBenefit = Random.Range(0, 2);  // Genera un número aleatorio entre 0 y 1
+
+        if (randomBenefit == 0)
+        {
+            // Recuperar 1 de munición
+            playerAttack.AddAmmo(1);
+            Debug.Log("Munición añadida en lugar de vida.");
+        }
+        else
+        {
+            // Aumentar la velocidad por 5 segundos
+            StartCoroutine(playerMovement.IncreaseSpeed(1.5f, 5f));
+            Debug.Log("Velocidad aumentada en lugar de vida.");
         }
     }
 }

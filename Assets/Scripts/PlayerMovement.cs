@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;  // Asegúrate de que este espacio de nombres esté presente
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller; // Referencia al CharacterController
     private float xRotation = 0f;
     private bool isLookingBack = false; // Indica si el jugador está mirando hacia atrás
+    private float originalMoveSpeed; // Para almacenar la velocidad original del jugador
 
     private Quaternion originalCameraRotation; // Para almacenar la rotación original de la cámara
 
@@ -36,6 +38,9 @@ public class PlayerMovement : MonoBehaviour
 
         // Guardar la rotación original de la cámara
         originalCameraRotation = cameraTransform.localRotation;
+
+        // Guardar la velocidad original del jugador
+        originalMoveSpeed = moveSpeed;
     }
 
     void Update()
@@ -85,5 +90,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isLookingBack = false;
         cameraTransform.localRotation = originalCameraRotation;
+    }
+
+    public IEnumerator IncreaseSpeed(float multiplier, float duration)
+    {
+        moveSpeed *= multiplier;  // Aumentar la velocidad
+        yield return new WaitForSeconds(duration);  // Esperar el tiempo de duración
+        moveSpeed = originalMoveSpeed;  // Restablecer la velocidad original
     }
 }

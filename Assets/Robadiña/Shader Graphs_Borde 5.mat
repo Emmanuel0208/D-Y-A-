@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Borde 4
+  m_Name: Shader Graphs_Borde 5
   m_Shader: {fileID: -6465566751694194690, guid: 73d8a998722336544bbd082b8ff189cd, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -52,7 +52,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 4.16
+    - _Scale: 4.34
     m_Colors:
-    - _Color: {r: 0.06847818, g: 0.25015837, b: 0.9911022, a: 1}
+    - _Color: {r: 1, g: 0.16099793, b: 0, a: 0}
   m_BuildTextureStacks: []

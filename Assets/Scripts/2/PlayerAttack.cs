@@ -18,7 +18,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        currentAmmo = maxAmmo;  // Inicializar la cantidad de balas
+        currentAmmo = 5;  // Iniciar con 5 municiones
         UpdateAmmoUI();  // Actualizar la UI de balas al inicio
         if (cooldownImage != null)
         {
@@ -68,6 +68,13 @@ public class PlayerAttack : MonoBehaviour
         {
             cooldownImage.gameObject.SetActive(true);  // Mostrar la imagen cuando se inicie el cooldown
         }
+    }
+
+    // Función para añadir munición
+    public void AddAmmo(int amount)
+    {
+        currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
+        UpdateAmmoUI();
     }
 
     // Función para actualizar la UI de balas

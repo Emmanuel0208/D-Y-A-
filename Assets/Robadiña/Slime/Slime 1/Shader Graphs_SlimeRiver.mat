@@ -67,20 +67,20 @@ Material:
     m_Ints: []
     m_Floats:
     - _BubbleMovementRatio: 1
-    - _BubbleNormalStrength: 1
-    - _LocalDisplacementScale: 3
-    - _LocalDisplacementSpeed: 1
+    - _BubbleNormalStrength: 0.5
+    - _LocalDisplacementScale: 10
+    - _LocalDisplacementSpeed: 5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SurfaceNoiseScale: 2.7
     - _SurfaceNoiseSpeed: 1
-    - _SurfaceNoiseStrength: 1
+    - _SurfaceNoiseStrength: 2
     - _smoothness: 0.5
     m_Colors:
     - _BaseColor: {r: 0.12, g: 1, b: 0, a: 0}
-    - _BubblesEmission: {r: 0.12, g: 1, b: 0, a: 0}
-    - _Flow: {r: 0, g: 0, b: 0, a: 0}
-    - _LocalDisplacementStrength: {r: 0, g: 0, b: 0, a: 0}
-    - _SplurColor: {r: 0.8501412, g: 0.99056596, b: 0.49127793, a: 0}
-    - _SplurEmission: {r: 0.12, g: 1, b: 0, a: 0}
+    - _BubblesEmission: {r: 1, g: 0.7894374, b: 0, a: 0}
+    - _Flow: {r: 1, g: 1, b: 0, a: 0}
+    - _LocalDisplacementStrength: {r: 0.05, g: 0.1, b: 0.06, a: 0}
+    - _SplurColor: {r: 0.9685534, g: 0.10408481, b: 0, a: 0}
+    - _SplurEmission: {r: 1, g: 0, b: 0.03767538, a: 0}
   m_BuildTextureStacks: []
