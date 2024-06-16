@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VictoryManager : MonoBehaviour
 {
@@ -6,14 +7,21 @@ public class VictoryManager : MonoBehaviour
     public GameObject victoryObjectPrefab;  // Prefab del objeto de victoria
     public GameObject victoryPanel;  // Panel de victoria
     public PlayerAttack playerAttack;
+    public GameObject keyIcon;  // Icono de la llave en la UI
+
+    private bool hasKey = false;  // Flag para saber si el jugador tiene la llave
     private GameObject currentVictoryObject;  // Referencia al objeto de victoria actual
 
     void Start()
     {
-        // Iniciar el juego con el panel de victoria desactivado
+        // Iniciar el juego con el panel de victoria y el icono de la llave desactivados
         if (victoryPanel != null)
         {
             victoryPanel.SetActive(false);
+        }
+        if (keyIcon != null)
+        {
+            keyIcon.SetActive(false);
         }
 
         // Generar el objeto de victoria en un punto de spawn aleatorio
@@ -34,6 +42,21 @@ public class VictoryManager : MonoBehaviour
             // Instanciar el objeto de victoria con la rotación inicial
             currentVictoryObject = Instantiate(victoryObjectPrefab, spawnPoint.position, initialRotation);
         }
+    }
+
+    public void CollectKey()
+    {
+        hasKey = true;
+        if (keyIcon != null)
+        {
+            keyIcon.SetActive(true);  // Mostrar el icono de la llave en la UI
+        }
+        Debug.Log("Llave recogida");
+    }
+
+    public bool HasKey()
+    {
+        return hasKey;
     }
 
     public void OnVictoryObjectCollected()

@@ -45,11 +45,11 @@ public class VictoryTrigger : MonoBehaviour
         // Verificar si el objeto que colisiona tiene la etiqueta del jugador
         if (other.CompareTag(playerTag))
         {
-            // Llamar a la función para manejar la victoria en VictoryManager
+            // Llamar a la función para recoger la llave
             if (victoryManager != null)
             {
-                victoryManager.OnVictoryObjectCollected();
-
+                victoryManager.CollectKey();
+                Destroy(gameObject);  // Destruir la llave
             }
             else
             {
