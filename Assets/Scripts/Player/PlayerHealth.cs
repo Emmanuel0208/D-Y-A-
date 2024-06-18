@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public GameObject gameOverPanel;  // Panel de Game Over
     public PlayerAttack playerAttack;  // Referencia al script de ataque del jugador
     public PlayerMovement playerMovement;  // Referencia al script de movimiento del jugador
+    public GameManager gameManager; // Referencia al script de movimiento del jugador
 
     private void Start()
     {
@@ -52,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
         Cursor.visible = true;  // Hacer el cursor visible
         Time.timeScale = 0f;  // Pausar el tiempo del juego
         playerAttack.canShoot = false;  // Deshabilitar la capacidad de disparar
+        gameManager.canTogglePause = false; 
     }
 
     private void UpdateHeartsUI()

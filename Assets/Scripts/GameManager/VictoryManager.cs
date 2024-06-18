@@ -8,7 +8,7 @@ public class VictoryManager : MonoBehaviour
     public GameObject victoryPanel;  // Panel de victoria
     public PlayerAttack playerAttack;
     public GameObject keyIcon;  // Icono de la llave en la UI
-
+    public GameManager gameManager;
     private bool hasKey = false;  // Flag para saber si el jugador tiene la llave
     private GameObject currentVictoryObject;  // Referencia al objeto de victoria actual
 
@@ -76,6 +76,7 @@ public class VictoryManager : MonoBehaviour
             Time.timeScale = 0f;  // Pausar el tiempo del juego      
             // deshabilitar la capacidad de disparar en el Player
             playerAttack.canShoot = false;
+            gameManager.canTogglePause = false;
         }
     }
 }
