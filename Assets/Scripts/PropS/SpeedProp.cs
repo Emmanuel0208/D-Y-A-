@@ -2,21 +2,29 @@ using UnityEngine;
 
 public class SpeedProp : MonoBehaviour
 {
-    public float speedMultiplier = 1.5f;  // Multiplicador de velocidad
-    public float duration = 5f;  // Duración del boost en segundos
+    // Multiplicador para aumentar la velocidad del jugador.
+    public float speedMultiplier = 1.5f;
+    // Duración durante la cual se mantendrá el aumento de velocidad.
+    public float duration = 5f;
 
+    // Método que se ejecuta cuando otro objeto entra en el collider de este objeto.
     private void OnTriggerEnter(Collider other)
     {
+        // Verifica si el objeto que colisiona tiene la etiqueta "Player".
         if (other.CompareTag("Player"))
         {
+            // Intenta obtener el componente PlayerMovement del objeto que colisiona.
             PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+            // Verifica si se encontró el componente PlayerMovement.
             if (playerMovement != null)
             {
-                // Iniciar la coroutine de aumento de velocidad en el jugador
+                // Inicia la coroutine IncreaseSpeed en el componente PlayerMovement.
                 playerMovement.StartCoroutine(playerMovement.IncreaseSpeed(speedMultiplier, duration));
+                // Imprime un mensaje en la consola indicando que la velocidad ha sido aumentada.
                 Debug.Log($"Velocidad aumentada por {duration} segundos.");
 
-                Destroy(gameObject);  // Destruir el prop de velocidad
+                // Destruye el objeto SpeedProp para simular que ha sido recogido.
+                Destroy(gameObject);
             }
         }
     }
