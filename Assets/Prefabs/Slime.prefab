@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  mouseSensitivity: 100
+  mouseSensitivity: 25
   playerBody: {fileID: 3589194084008275923}
   cameraTransform: {fileID: 7845025407265820038}
 --- !u!114 &4876452704135606607

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;  // Necesario para trabajar con UI en Unity
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float mouseSensitivity = 100f;  // Sensibilidad del movimiento del ratón
     public Transform playerBody;  // Referencia al cuerpo del Player
     public Transform cameraTransform; // Referencia a la cámara del Player
+    public Slider sensitivitySlider;  // Slider de sensibilidad del mouse
 
     private CharacterController controller; // Referencia al CharacterController
     private float xRotation = 0f;
@@ -32,6 +34,19 @@ public class PlayerMovement : MonoBehaviour
         if (cameraTransform == null)
         {
             Debug.LogError("Camera Transform no asignado. Asigna la cámara principal al campo cameraTransform.");
+        }
+
+        // Configurar el slider
+        if (sensitivitySlider != null)
+        {
+            sensitivitySlider.minValue = 0;
+            sensitivitySlider.maxValue = 100;
+            sensitivitySlider.value = mouseSensitivity;
+            sensitivitySlider.onValueChanged.AddListener(delegate { AdjustSensitivity(); });
+        }
+        else
+        {
+            Debug.LogWarning("Slider de sensibilidad no asignado.");
         }
     }
 
@@ -78,6 +93,15 @@ public class PlayerMovement : MonoBehaviour
     {
         isLookingBack = false;
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+
+    // Función para ajustar la sensibilidad del mouse
+    public void AdjustSensitivity()
+    {
+        if (sensitivitySlider != null)
+        {
+            mouseSensitivity = sensitivitySlider.value;
+        }
     }
 
     // Función para ralentizar al jugador

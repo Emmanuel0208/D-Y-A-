@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 9
-  recalculateInterval: 1
+  recalculateInterval: 3
 --- !u!33 &8638775146533691138
 MeshFilter:
   m_ObjectHideFlags: 0
